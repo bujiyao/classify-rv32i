@@ -77,6 +77,26 @@ read_matrix:
     # mul s1, t1, t2   # s1 is number of elements
     # FIXME: Replace 'mul' with your own implementation
 
+    # Calculate rows * cols using the dot product multiplication logic
+    li s1, 0          # Initialize result
+    mv t3, t1         # Copy rows to t3 (multiplier)
+    mv t4, t2         # Copy cols to t4 (multiplicand)
+    
+    # Handle negative case if any
+    bltz t3, mult_neg
+    j mult_loop
+    
+mult_neg:
+    neg t3, t3        # Make multiplier positive
+    neg t4, t4        # Negate multiplicand
+
+mult_loop:
+    beqz t3, mult_done
+    add s1, s1, t4    # Add multiplicand
+    addi t3, t3, -1   # Decrement multiplier
+    j mult_loop
+    
+mult_done:
     slli t3, s1, 2
     sw t3, 24(sp)    # size in bytes
 
