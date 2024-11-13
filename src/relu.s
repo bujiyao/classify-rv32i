@@ -29,6 +29,18 @@ relu:
 
 loop_start:
     # TODO: Add your own implementation
+    slli t2, t1, 2
+    add t3, a0, t2
+    
+    lw t4, 0(t3)
+    bge t4, zero, loop_continue  # If value >= 0, continue
+    sw zero, 0(t3)       # If value < 0, store 0
+    
+loop_continue:
+    addi t1, t1, 1
+    blt t1, a1, loop_start # If counter < length, continue loop
+    
+    jr ra
 
 error:
     li a0, 36          

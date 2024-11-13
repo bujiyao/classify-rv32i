@@ -116,6 +116,25 @@ inner_loop_start:
     
 inner_loop_end:
     # TODO: Add your own implementation
+    mv t0, a2          # t0 = number of columns
+    slli t2, t0, 2     # t2 = cols * 4
+    add s3, s3, t2     # move to next row
+    addi s0, s0, 1     # increment row counter
+    j outer_loop_start
+
+outer_loop_end:
+    # Epilogue
+    lw ra, 0(sp)
+    lw s0, 4(sp)
+    lw s1, 8(sp)
+    lw s2, 12(sp)
+    lw s3, 16(sp)
+    lw s4, 20(sp)
+    lw s5, 24(sp)
+    
+    addi sp, sp, 28
+    
+    jr ra
 
 error:
     li a0, 38
