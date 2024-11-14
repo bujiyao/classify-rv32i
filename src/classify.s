@@ -167,6 +167,15 @@ classify:
     lw t0, 0(s3)
     lw t1, 0(s8)
     # mul a0, t0, t1 # FIXME: Replace 'mul' with your own implementation
+
+    li a0, 0              # Initialize result
+    mv t2, t0             # Copy rows
+mult1_loop:
+    beqz t2, mult1_done
+    add a0, a0, t1    # Add cols
+    addi t2, t2, -1   # Decrement counter
+    j mult1_loop
+mult1_done:
     slli a0, a0, 2
     jal malloc 
     beq a0, x0, error_malloc
@@ -206,6 +215,14 @@ classify:
     # mul a1, t0, t1 # length of h array and set it as second argument
     # FIXME: Replace 'mul' with your own implementation
     
+    li a1, 0              # Initialize result
+    mv t2, t0             # Copy rows
+mult2_loop:
+    beqz t2, mult2_done
+    add a1, a1, t1    # Add cols
+    addi t2, t2, -1   # Decrement counter
+    j mult2_loop
+mult2_done:
     jal relu
     
     lw a0, 0(sp)
@@ -227,6 +244,15 @@ classify:
     lw t0, 0(s3)
     lw t1, 0(s6)
     # mul a0, t0, t1 # FIXME: Replace 'mul' with your own implementation
+
+    li a0, 0              # Initialize result
+    mv t2, t0             # Copy rows
+mult3_loop:
+    beqz t2, mult3_done
+    add a0, a0, t1    # Add cols
+    addi t2, t2, -1   # Decrement counter
+    j mult3_loop
+mult3_done:
     slli a0, a0, 2
     jal malloc 
     beq a0, x0, error_malloc
@@ -286,9 +312,17 @@ classify:
     mv a0, s10 # load o array into first arg
     lw t0, 0(s3)
     lw t1, 0(s6)
-    mul a1, t0, t1 # load length of array into second arg
+    # mul a1, t0, t1 # load length of array into second arg
     # FIXME: Replace 'mul' with your own implementation
     
+    li a1, 0              # Initialize result
+    mv t2, t0             # Copy rows
+mult4_loop:
+    beqz t2, mult4_done
+    add a1, a1, t1    # Add cols
+    addi t2, t2, -1   # Decrement counter
+    j mult4_loop
+mult4_done:
     jal argmax
     
     mv t0, a0 # move return value of argmax into t0
