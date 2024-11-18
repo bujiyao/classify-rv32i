@@ -6,7 +6,7 @@ Core Logic of Absolute Value (abs) Implementation:
 - Check if number is non-negative.
 - If already positive (>= 0), keep original value.
 - If negative, subtract from zero to make it positive.
-```assembly=
+```assembly
 bge t0, zero, done  # If t0 >= 0, branch to done
 sub t0, x0, t0      # t0 = 0 - t0
 sw t0 0(a0)         # Store the result
@@ -17,7 +17,7 @@ Core Logic of ReLU (Rectified Linear Unit) Implementation:
 - For each array element:
   - Keep value if positive or zero
   - Replace with zero if negative
-```assembly=
+```assembly
 loop_start:
     slli t2, t1, 2
     add t3, a0, t2
@@ -39,7 +39,7 @@ Core Logic of Maximum Element Index Finder (argmax):
 - Compare each element with current maximum
 - Only update when finding strictly larger value
 - Skip update when current value is less than or equal
-```assembly=
+```assembly
 loop_start:
     bge t2, a1, loop_end     # If current index >= length, exit loop
     
@@ -64,11 +64,6 @@ loop_end:
     jr ra
 ```
 ## Dot Product
-Implementation of the dot product function, defined as:
-$$
-\text{dot product} = \sum_{i=0}^{\text{element\_count} - 1} \left( \text{arr0}[i \times \text{stride0}] \times \text{arr1}[i \times \text{stride1}] \right)
-$$
-
 The core logic of the dot function can be divided into 2 main parts:
 
 1. **Main Loop**:
@@ -92,9 +87,9 @@ Repeat a times:
 
 ## Matrix Multiplication (matmul)
 Implementation of the matmul function, defined as:
-$$
-C[i][j] = \text{dot}(A[i], B[:,j])
-$$
+
+$C[i][j] = \text{dot}(A[i], B[:,j])$
+
 The `matmul` function performs matrix multiplication, specifically computing the result matrix ( C ) from the multiplication of two matrices \( M0 ) and ( M1 ). Here is the detailed explanation of its core logic:
 
 1. **Outer Loop**:
